@@ -78,6 +78,56 @@
       @apply border-s-accent/80 wrap-break-word opacity-80;
     }
 
+    .callout {
+      @apply my-6 rounded-2xl border px-5 py-4 not-italic opacity-100;
+    }
+
+    .callout > :first-child {
+      @apply mt-0;
+    }
+
+    .callout > :last-child {
+      @apply mb-0;
+    }
+
+    .callout > .callout-title {
+      @apply mb-2 font-semibold tracking-wide text-foreground no-underline;
+    }
+
+    .callout > ol,
+    .callout > ul {
+      @apply my-3;
+    }
+
+    .callout-abstract {
+      @apply border-sky-500/40 bg-sky-500/8;
+    }
+
+    .callout-summary {
+      @apply border-amber-500/40 bg-amber-500/8;
+    }
+
+    .callout-tip,
+    .callout-success,
+    .callout-check {
+      @apply border-emerald-500/40 bg-emerald-500/8;
+    }
+
+    .callout-note,
+    .callout-info,
+    .callout-example {
+      @apply border-blue-500/40 bg-blue-500/8;
+    }
+
+    .callout-important,
+    .callout-warning,
+    .callout-caution,
+    .callout-danger,
+    .callout-failure,
+    .callout-error {
+      @apply border-orange-500/40 bg-orange-500/8;
+    }
+
     details {
       @apply inline-block cursor-pointer text-foreground select-none [&_p]:hidden [&_ul]:my-0!;
     }
