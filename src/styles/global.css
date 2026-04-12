@@ -21,7 +21,13 @@ html[data-theme="dark"] {
 }
 
 @theme inline {
-  --font-app: var(--font-google-sans-code);
+  --font-body:
+    "PingFang SC", "Hiragino Sans GB", "Noto Sans SC", "Microsoft YaHei",
+    "Helvetica Neue", Arial, sans-serif;
+  --font-heading:
+    "Iowan Old Style", "Palatino Linotype", "Noto Serif SC",
+    "Source Han Serif SC", "Songti SC", serif;
+  --font-code: var(--font-google-sans-code);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-accent: var(--accent);
@@ -39,7 +45,9 @@ html[data-theme="dark"] {
     @apply overflow-y-scroll scroll-smooth;
   }
   body {
-    @apply flex min-h-svh flex-col bg-background font-app text-foreground selection:bg-accent/75 selection:text-background;
+    @apply flex min-h-svh flex-col bg-background font-body text-foreground selection:bg-accent/75 selection:text-background;
+    font-feature-settings: "kern" 1, "liga" 1;
+    text-rendering: optimizeLegibility;
   }
   a,
   button {

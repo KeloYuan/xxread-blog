@@ -11,6 +11,9 @@
     h4,
     th {
       @apply mb-3 text-foreground;
+      font-family: var(--font-heading);
+      font-weight: 650;
+      letter-spacing: -0.015em;
     }
 
     h3 {
@@ -25,6 +28,14 @@
     table,
     code {
       @apply text-foreground;
+    }
+
+    p,
+    li,
+    blockquote,
+    figcaption,
+    table {
+      line-height: 1.85;
     }
 
     a {
@@ -68,6 +79,7 @@
 
     code {
       @apply rounded bg-muted/75 p-1 wrap-break-word text-foreground before:content-none after:content-none;
+      font-family: var(--font-code);
     }
 
     .astro-code code {
@@ -144,6 +156,7 @@
   /* ===== Code Blocks & Syntax Highlighting ===== */
   .astro-code {
     @apply flex border bg-(--shiki-light-bg) text-(--shiki-light) outline-border [&_span]:text-(--shiki-light);
+    font-family: var(--font-code);
   }
 
   html[data-theme="dark"] .astro-code {
