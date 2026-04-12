@@ -3,7 +3,7 @@ layout: ../layouts/AboutLayout.astro
 title: "About"
 ---
 
-这是 Sloane 的个人博客。
+这是小元Niki的博客。
 
 我想把这里做成一个长期更新的文章站，不追热点，不做信息流，主要放那些值得完整写下来、也值得别人完整读完的内容。
 
