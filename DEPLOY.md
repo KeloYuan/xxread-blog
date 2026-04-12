@@ -40,3 +40,28 @@ location ^~ /blog/ {
 3. 运行 `npm run build`
 4. 把 `dist/` 内容同步到 `/var/www/xxread-blog/`
 5. `nginx -t && systemctl reload nginx`
+
+## GitHub 自动部署
+
+仓库已经预留了 GitHub Actions 自动部署流程：
+
+- 工作流文件：`.github/workflows/deploy.yml`
+- 触发条件：推送到 `main` 或手动触发
+- 部署方式：GitHub Actions 本地构建后，`rsync` 到纽约 VPS
+
+需要的仓库 secret / variables：
+
+- Secret: `DEPLOY_SSH_KEY`
+- Variable: `DEPLOY_HOST`
+- Variable: `DEPLOY_USER`
+- Variable: `DEPLOY_PATH`
+- Variable: `DEPLOY_URL`
+- Variable: `POST_SMOKE_URL`
+- Variable: `RSS_URL`
+
+配置完成后，日常发布流程会变成：
+
+1. 修改 `src/data/essays/*.md`
+2. `git add .`
+3. `git commit -m "publish new post"`
+4. `git push`

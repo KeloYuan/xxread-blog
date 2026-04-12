@@ -1,0 +1,69 @@
+name: Deploy Blog
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-blog-production
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    name: Build and deploy to xxread.top/blog
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.11.1
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build site
+        run: pnpm run build
+
+      - name: Configure SSH
+        env:
+          DEPLOY_SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
+          DEPLOY_HOST: ${{ vars.DEPLOY_HOST }}
+        run: |
+          mkdir -p ~/.ssh
+          printf '%s\n' "$DEPLOY_SSH_KEY" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan -H "$DEPLOY_HOST" >> ~/.ssh/known_hosts
+
+      - name: Upload dist to server
+        env:
+          DEPLOY_HOST: ${{ vars.DEPLOY_HOST }}
+          DEPLOY_PATH: ${{ vars.DEPLOY_PATH }}
+          DEPLOY_USER: ${{ vars.DEPLOY_USER }}
+        run: |
+          rsync -az --delete dist/ "${DEPLOY_USER}@${DEPLOY_HOST}:${DEPLOY_PATH}/"
+
+      - name: Smoke test production site
+        env:
+          DEPLOY_URL: ${{ vars.DEPLOY_URL }}
+          POST_SMOKE_URL: ${{ vars.POST_SMOKE_URL }}
+          RSS_URL: ${{ vars.RSS_URL }}
+        run: |
+          curl -fsSL "$DEPLOY_URL" >/dev/null
+          curl -fsSL "$POST_SMOKE_URL" >/dev/null
+          curl -fsSL "$RSS_URL" >/dev/null
