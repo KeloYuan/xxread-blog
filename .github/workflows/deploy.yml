@@ -61,9 +61,13 @@ jobs:
       - name: Smoke test production site
         env:
           DEPLOY_URL: ${{ vars.DEPLOY_URL }}
+          DEPLOY_HOST: ${{ vars.DEPLOY_HOST }}
+          DEPLOY_USER: ${{ vars.DEPLOY_USER }}
           POST_SMOKE_URL: ${{ vars.POST_SMOKE_URL }}
           RSS_URL: ${{ vars.RSS_URL }}
         run: |
-          curl -fsSL "$DEPLOY_URL" >/dev/null
-          curl -fsSL "$POST_SMOKE_URL" >/dev/null
-          curl -fsSL "$RSS_URL" >/dev/null
+          ssh "${DEPLOY_USER}@${DEPLOY_HOST}" "\
+            curl -fsSL --resolve xxread.top:443:127.0.0.1 '${DEPLOY_URL}' >/dev/null && \
+            curl -fsSL --resolve xxread.top:443:127.0.0.1 '${POST_SMOKE_URL}' >/dev/null && \
+            curl -fsSL --resolve xxread.top:443:127.0.0.1 '${RSS_URL}' >/dev/null\
+          "
