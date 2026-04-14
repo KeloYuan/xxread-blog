@@ -1,16 +1,13 @@
 ---
 title: 第三方 OAuth 登录笔记
 description: 用 Linux.do + Google 登录案例彻底理解 OAuth 2.0 / OIDC / 回调链接 / Token / 本地会话
-aliases:
-  - OAuth 登录笔记
-  - Google 第三方登录
+pubDatetime: 2026-04-13T12:00:00Z
+modDatetime: 2026-04-13T12:00:00Z
 tags:
   - 技术笔记
   - OAuth
   - OIDC
   - 登录系统
-created: 2026-04-13
-updated: 2026-04-13
 ---
 
 # 第三方 OAuth 登录笔记
